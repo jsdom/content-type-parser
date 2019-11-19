@@ -221,4 +221,19 @@ describe("Group-testing functions", () => {
     expect((new MIMEType("text/javascript;goal=module")).isJavaScript()).toBe(false);
     expect((new MIMEType("text/javascript;goal=module")).isJavaScript({ allowParameters: true })).toBe(true);
   });
+
+  test("isJSON", () => {
+    expect((new MIMEType("application/json")).isJSON()).toBe(true);
+    expect((new MIMEType("application/json;charset=utf-8")).isJSON()).toBe(true);
+    expect((new MIMEType("application/json;charset=utf-8;foo=bar")).isJSON()).toBe(true);
+
+    expect((new MIMEType("application/ld+json")).isJSON()).toBe(true);
+    expect((new MIMEType("application/ld+json;charset=utf-8")).isJSON()).toBe(true);
+    expect((new MIMEType("application/ld+json;charset=utf-8;foo=bar")).isJSON()).toBe(true);
+
+    expect((new MIMEType("text/xhtml")).isJSON()).toBe(false);
+    expect((new MIMEType("text/svg")).isJSON()).toBe(false);
+    expect((new MIMEType("application/html")).isJSON()).toBe(false);
+    expect((new MIMEType("application/xml+xhtml")).isJSON()).toBe(false);
+  });
 });
